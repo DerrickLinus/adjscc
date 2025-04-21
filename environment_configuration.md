@@ -202,7 +202,7 @@ pip install 'tensorflow[and-cuda]==2.14.1'
 python3 -c "import tensorflow as tf; print(tf.sysconfig.get_build_info()['cuda_version'])"
 python3 -c "import tensorflow as tf; print(tf.sysconfig.get_build_info()['cudnn_version'])"
 python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))" # 如果这里发现 GPU 验证不成功，回看前面的步骤
-# 需要先删除项目文件中的 tensorflow-compression，否则会报错：RuntimeError: For tensorflow_compression, please install TensorFlow 2.1.
+# 需要先删除项目文件中的 tensorflow-compression，否则会报错：RuntimeError: For tensorflow_compression, please install TensorFlow 2.1
 rm -r /home/jay/workspace/adjscc/tensorflow_compression
 python -m pip install tensorflow-compression
 python -m tensorflow_compression.all_tests
