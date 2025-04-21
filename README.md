@@ -7,7 +7,7 @@ CIFAR-10 is from inner tensorflow.keras.datasets.cifar10.<br>
 ImageNet is manually made and is too huge to upload.
 
 # Warning:
-1. The provided folder of tensorflow_compression is only for macOS. If you want to use tensorflow_compression in other systems, please use pip to install [tensorflow_compression](https://github.com/tensorflow/compression) and change corresponding codes reling on tensorflow_compression.
+1. The provided folder of tensorflow_compression is only for macOS. If you want to use tensorflow_compression in other systems, please first delete `tensorflow_compression` under the adjscc, and use pip to install [tensorflow_compression](https://github.com/tensorflow/compression) and change corresponding codes reling on tensorflow_compression.
 2. If you want to use ImageNet to test bdjscc_imagenet.py and adjscc_imagenet.py, you can use pip to install [tensorflow_dataset](https://www.tensorflow.org/datasets?hl=zh-cn) and download [ImageNet](https://www.tensorflow.org/datasets/catalog/imagenet2012?hl=zh-cn). The corrsponding code of loading ImageNet should be modified.
 
 # Citation:

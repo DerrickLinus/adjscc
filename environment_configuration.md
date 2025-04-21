@@ -128,6 +128,23 @@ print("CUDA Version Used by TensorFlow (Internal):", tf.sysconfig.get_build_info
 print("cuDNN Version Used by TensorFlow (Internal):", tf.sysconfig.get_build_info()["cudnn_version"])  
 print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 ```
+如果GPU验证不成功：
+- Create symbolic links to NVIDIA shared libraries:
+```python
+pushd $(dirname $(python -c 'print(__import__("tensorflow").__file__)'))
+ln -svf ../nvidia/*/lib/*.so* .
+popd
+```
+- Create a symbolic link to ptxas:
+```python
+ln -sf $(find $(dirname $(dirname $(python -c "import nvidia.cuda_nvcc;print(nvidia.cuda_nvcc.__file__)"))/*/bin/) -name ptxas -print -quit) $CONDA_PREFIX/bin/ptxas # conda环境
+ln -sf $(find $(dirname $(dirname $(python -c "import nvidia.cuda_nvcc;print(nvidia.cuda_nvcc.__file__)"))/*/bin/) -name ptxas -print -quit) $VIRTUAL_ENV/bin/ptxas # venv创建的虚拟环境
+```
+- Verify the GPU setup:
+```python
+python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
+```
+- 重新安装 TensorFlow ，加上`-U`参数
 ## 忽略已经注册警告
 ```python
 import os
@@ -136,9 +153,10 @@ os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 ```
 
 # 更新 tensorflow-compression
-原项目代码中的 tensorflow-compression 只适用于 macOS (见README.md) ，对于 Linux 系统需要重新安装，因为项目本身已经包含 tensorflow-compression 文件，所以使用更新命令：  
+原项目代码中的 tensorflow-compression 只适用于 macOS (见README.md) ，对于 Linux 系统需要重新安装，因为项目本身包含 tensorflow-compression 文件，所以需要**先删除项目文件中的 `tensorflow-compression`**，再重新安装
 ```python
-python -m pip install tensorflow-compression -U
+rm -r /home/jay/workspace/adjscc/tensorflow_compression
+python -m pip install tensorflow-compression
 ```
 > 更新命令来自 https://github.com/tensorflow/compression
 ## 检验 tensorflow-compression 是否能够正常使用
@@ -180,8 +198,12 @@ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/f
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
 pip install --upgrade pip
-pip install tensorflow[and-cuda]
-python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
-python -m pip install tensorflow-compression -U
+pip install 'tensorflow[and-cuda]==2.14.1'
+python3 -c "import tensorflow as tf; print(tf.sysconfig.get_build_info()['cuda_version'])"
+python3 -c "import tensorflow as tf; print(tf.sysconfig.get_build_info()['cudnn_version'])"
+python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))" # 如果这里发现 GPU 验证不成功，回看前面的步骤
+# 需要先删除项目文件中的 tensorflow-compression，否则会报错：RuntimeError: For tensorflow_compression, please install TensorFlow 2.1.
+rm -r /home/jay/workspace/adjscc/tensorflow_compression
+python -m pip install tensorflow-compression
 python -m tensorflow_compression.all_tests
 ```
