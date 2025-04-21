@@ -40,14 +40,16 @@
 ## 创建虚拟环境
 - 官方推荐
     - python3 -m venv tf-gpu python=<版本>  
-- 功能强大
+- 功能强大（使用）
     - conda create -n tf-gpu python=<版本>
 > tf-gpu为自定义的虚拟环境名称  
-python=3.11为指定的python版本  
 Note: Do not install TensorFlow with conda. It may not have the latest stable version. pip is recommended since TensorFlow is only officially released to PyPI.  
-本项目使用 `python=3.10` 的版本
+本项目使用 `python=3.10.17` 的版本
 ## 进入虚拟环境
-- source tf/bin/activate  
+- venv
+    - source tf-gpu/bin/activate   
+- conda
+    - conda activate tf-gpu
 ## 配置清华源
 ### 先查看通道配置
 - conda config --show channels
@@ -65,6 +67,7 @@ Note: Do not install TensorFlow with conda. It may not have the latest stable ve
 - For GPU users
     - pip install tensorflow[and-cuda]
 > 指定 TensorFlow 版本：pip install 'tensorflow[and-cuda]==2.14.1'  
+如果在 Windows 上（命令提示符或 PowerShell）必须加引号 pip install 'tensorflow[and-cuda]'  
 更新 TensorFlow 版本：pip install 'tensorflow[and-cuda]' -U
 - For CPU users
     - pip install tensorflow
@@ -110,3 +113,22 @@ Note: Do not install TensorFlow with conda. It may not have the latest stable ve
 ## 删除虚拟环境
 - conda env remove -n <venv>（官方推荐）
 - conda remove --name <venv> --all
+
+# 完整配置代码
+```python
+conda --version
+conda update -n base -c defaults
+conda clean --all -y
+conda create -n tf-gpu python=3.10.17
+conda activate tf-gpu
+conda config --show channels
+conda config --remove-key channels
+conda config --add channels defaults
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
+pip install --upgrade pip
+pip install tensorflow[and-cuda]
+python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
+python -m pip install tensorflow-compression -U
+python -m tensorflow_compression.all_tests
