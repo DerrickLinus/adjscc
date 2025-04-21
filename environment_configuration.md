@@ -1,9 +1,11 @@
 # 查看信息
 ## 查看系统
-- uname -o 显示是 Linux 或 windows 或 macOS  
+```python
+uname -o 显示是 Linux 或 windows 或 macOS  
 - uname -m 显示系统架构 如 x86_64 或 aarch64/arm64  
 - uname -o && uname -m  
 - **本项目的系统为 `Linux x86_64`**
+```
 ## 查看显卡驱动
 - nvidia-smi  
 > 重点看Driver Version 和 CUDA Version
