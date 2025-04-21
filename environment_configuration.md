@@ -25,7 +25,8 @@
 如果都显示 No such file or directory，说明 cuDNN未安装在 /usr/local/cuda下
 ### 如果是在一个 conda 虚拟环境下
 - conda list | grep cudnn  
-> 如果这个命令有输出（显示 cudnn 包和版本号），那么 cuDNN 已经安装在你的 Conda 环境中了，只是没有安装在系统级的 /usr/local/cuda 路径下
+
+如果这个命令有输出（显示 cudnn 包和版本号），那么 cuDNN 已经安装在你的 Conda 环境中了，只是没有安装在系统级的 /usr/local/cuda 路径下
 
 # 更新 conda 
 - conda update -n base -c defaults
@@ -43,12 +44,9 @@
 ## 创建虚拟环境
 - 官方推荐
     - python3 -m venv tf-gpu python=<版本>  
-
-或
-
 - 功能强大
     - conda create -n tf-gpu python=<版本>
-> tf-gpu为自定义的虚拟环境名称；python=3.11为指定的python版本）  
+> tf-gpu为自定义的虚拟环境名称；python=3.11为指定的python版本
 Note: Do not install TensorFlow with conda. It may not have the latest stable version. pip is recommended since TensorFlow is only officially released to PyPI.  
 本项目使用 `python=3.10` 的版本
 ## 进入虚拟环境
@@ -81,11 +79,12 @@ Note: Do not install TensorFlow with conda. It may not have the latest stable ve
 - Verify the GPU setup:
     - python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
 > If a list of GPU devices is returned, you've installed TensorFlow successfully. If not continue to the next step.  
-其他验证  
+
+其他验证：  
 import tensorflow as tf  
 print("TensorFlow Version: ", tf.__version__)  
-print("CUDA Version Used by TensorFlow (Internal):", tf.sysconfig.get_build_info()["cuda_version"]) # 可能显示构建时使用的版本，如 '12.2'  
-print("cuDNN Version Used by TensorFlow (Internal):", tf.sysconfig.get_build_info()["cudnn_version"]) # 可能显示构建时使用的版本，如 '8' 或 '8.9'  
+print("CUDA Version Used by TensorFlow (Internal):", tf.sysconfig.get_build_info()["cuda_version"])  
+print("cuDNN Version Used by TensorFlow (Internal):", tf.sysconfig.get_build_info()["cudnn_version"])  
 print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 ## 忽略已经注册警告
 - import os
@@ -93,8 +92,7 @@ print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 - os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 
 # 更新 tensorflow-compression
-原项目代码中的 tensorflow-compression 只适用于 macOS (见README.md)  
-对于 Linux 系统需要重新安装，因为项目本身已经包含 tensorflow-compression 文件，所以使用更新命令：  
+原项目代码中的 tensorflow-compression 只适用于 macOS (见README.md) ，对于 Linux 系统需要重新安装，因为项目本身已经包含 tensorflow-compression 文件，所以使用更新命令：  
 - python -m pip install tensorflow-compression -U
 > 更新命令来自 https://github.com/tensorflow/compression
 ## 检验 tensorflow-compression 是否能够正常使用
