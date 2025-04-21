@@ -6,24 +6,24 @@
 - **本项目的系统为 `Linux x86_64`**
 ## 查看显卡驱动
 - nvidia-smi  
-重点看Driver Version 和 CUDA Version
+> 重点看Driver Version 和 CUDA Version
 ## 查看 conda 版本
-- conda --version
-以下查看可选，可直接跳转到更新 conda 的步骤
+- conda --version  
+> 以下查看可选，可直接跳转到更新 conda 的步骤
 ## 查看是否安装了 cuda
 - nvcc --version
 ## 查看 cuda 的安装路径
 - which nvcc
 ## 查看是否安装了 cuDNN
 ### 如果已经查看了 cuda 的安装路径（一般类似于/usr/local/cuda/bin/nvcc）
-优先查找较新的 cudnn_version.h (cuDNN 7+)：
-- cat /usr/local/cuda/include/cudnn_version.h | grep CUDNN_MAJOR -A 2
-如果上面的文件不存在或没有版本信息，尝试旧的 cudnn.h：
-- cat /usr/local/cuda/include/cudnn.h | grep CUDNN_MAJOR -A 2
-- 如果都显示 No such file or directory，说明 cuDNN未安装在 /usr/local/cuda下
+优先查找较新的 cudnn_version.h (cuDNN 7+)：  
+- cat /usr/local/cuda/include/cudnn_version.h | grep CUDNN_MAJOR -A 2  
+如果上面的文件不存在或没有版本信息，尝试旧的 cudnn.h：  
+- cat /usr/local/cuda/include/cudnn.h | grep CUDNN_MAJOR -A 2  
+如果都显示 No such file or directory，说明 cuDNN未安装在 /usr/local/cuda下
 ### 如果是在一个 conda 虚拟环境下
-- conda list | grep cudnn
-如果这个命令有输出（显示 cudnn 包和版本号），那么 cuDNN 已经安装在你的 Conda 环境中了，只是没有安装在系统级的 /usr/local/cuda 路径下
+- conda list | grep cudnn  
+> 如果这个命令有输出（显示 cudnn 包和版本号），那么 cuDNN 已经安装在你的 Conda 环境中了，只是没有安装在系统级的 /usr/local/cuda 路径下
 
 # 更新 conda 
 - conda update -n base -c defaults
@@ -31,14 +31,14 @@
 -c defaults：指定从默认（defaults）频道查找更新
 
 # 清理 conda 缓存（可选）
-- conda clean --all 
+- conda clean --all  
 或
-- conda clean --all -y
+- conda clean --all -y  
 
 # 配置 TensorFlow 环境
 ## 创建虚拟环境
 - 官方推荐
-    - python3 -m venv tf-gpu python=<版本>
+    - python3 -m venv tf-gpu python=<版本>  
 或
 - 功能强大
     - conda create -n tf-gpu python=<版本>
