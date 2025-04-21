@@ -5,7 +5,7 @@ uname -o # 显示是 Linux 或 windows 或 macOS
 uname -m # 显示系统架构 如 x86_64 或 aarch64/arm64  
 uname -o && uname -m # 合并命令
 ```  
-**本项目的系统为 `Linux x86_64`**
+本项目的系统为 `Linux x86_64`
 ## 查看显卡驱动
 ```python
 nvidia-smi
@@ -63,8 +63,8 @@ python3 -m venv tf-gpu python=<版本>
 conda create -n tf-gpu python=<版本>
 ```
 > - tf-gpu为自定义的虚拟环境名称  
-- Note: Do not install TensorFlow with conda. It may not have the latest stable version. pip is recommended since TensorFlow is only officially released to PyPI.  
-- 本项目使用 `python=3.10.17` 的版本
+> - Note: Do not install TensorFlow with conda. It may not have the latest stable version. pip is recommended since TensorFlow is only officially released to PyPI.  
+> - 本项目使用 `python=3.10.17` 的版本
 ## 进入虚拟环境
 venv
 ```python
@@ -101,8 +101,8 @@ For GPU users
 pip install tensorflow[and-cuda]
 ```
 > - 指定 TensorFlow 版本：pip install 'tensorflow[and-cuda]==2.14.1'  
-- 如果在 Windows 上（命令提示符或 PowerShell）必须加引号 pip install 'tensorflow[and-cuda]'  
-- 更新 TensorFlow 版本：pip install 'tensorflow[and-cuda]' -U
+> - 如果在 Windows 上（命令提示符或 PowerShell）必须加引号 pip install 'tensorflow[and-cuda]'  
+> - 更新 TensorFlow 版本：pip install 'tensorflow[and-cuda]' -U
 For CPU users
 ```python
 pip install tensorflow
