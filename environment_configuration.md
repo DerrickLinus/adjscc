@@ -34,11 +34,7 @@
 -c defaults：指定从默认（defaults）频道查找更新
 
 # 清理 conda 缓存（可选）
-- conda clean --all
-
-或
-
-- conda clean --all -y  
+- conda clean --all 或 conda clean --all -y  
 
 # 配置 TensorFlow 环境
 ## 创建虚拟环境
@@ -46,7 +42,8 @@
     - python3 -m venv tf-gpu python=<版本>  
 - 功能强大
     - conda create -n tf-gpu python=<版本>
-> tf-gpu为自定义的虚拟环境名称；python=3.11为指定的python版本
+> tf-gpu为自定义的虚拟环境名称  
+python=3.11为指定的python版本  
 Note: Do not install TensorFlow with conda. It may not have the latest stable version. pip is recommended since TensorFlow is only officially released to PyPI.  
 本项目使用 `python=3.10` 的版本
 ## 进入虚拟环境
@@ -80,12 +77,12 @@ Note: Do not install TensorFlow with conda. It may not have the latest stable ve
     - python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
 > If a list of GPU devices is returned, you've installed TensorFlow successfully. If not continue to the next step.  
 
-其他验证：  
-import tensorflow as tf  
-print("TensorFlow Version: ", tf.__version__)  
-print("CUDA Version Used by TensorFlow (Internal):", tf.sysconfig.get_build_info()["cuda_version"])  
-print("cuDNN Version Used by TensorFlow (Internal):", tf.sysconfig.get_build_info()["cudnn_version"])  
-print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
+- 其他验证：  
+    - import tensorflow as tf  
+    - print("TensorFlow Version: ", tf.__version__)  
+    - print("CUDA Version Used by TensorFlow (Internal):", tf.sysconfig.get_build_info()["cuda_version"])  
+    - print("cuDNN Version Used by TensorFlow (Internal):", tf.sysconfig.get_build_info()["cudnn_version"])  
+    - print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 ## 忽略已经注册警告
 - import os
 - os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # 0=INFO, 1=WARNING, 2=ERROR, 3=FATAL 抑制警告信息，只显示错误或致命信息
