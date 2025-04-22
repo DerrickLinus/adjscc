@@ -1,1 +1,4 @@
+__pycache__/
 command_history.txt
+loss/
+model/

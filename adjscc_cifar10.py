@@ -22,6 +22,10 @@ def train(args, model):
         args.transmit_channel_num) + '_snrdb' + str(args.snr_low_train) + 'to' + str(
         args.snr_up_train) + '_bs' + str(args.batch_size) + '_lr' + str(args.learning_rate)
     model_path = args.model_dir + filename + '.h5'
+    # 检查并创建 model 目录（如果不存在）
+    if args.model_dir and not os.path.exists(args.model_dir):
+        os.makedirs(args.model_dir, exist_ok=True)
+        print(f"Directory {args.model_dir} created.")
     if args.load_model_path != None: 
         model.load_weights(args.load_model_path) 
     for epoch in range(0, args.epochs):
@@ -52,6 +56,10 @@ def train(args, model):
         epoch_list.append(epoch)
         loss_list.append(loss)
         val_loss_list.append(val_loss)
+        # 检查并创建 loss 目录（如果不存在）
+        if args.loss_dir and not os.path.exists(args.loss_dir):
+            os.makedirs(args.loss_dir, exist_ok=True)
+            print(f"Directory {args.loss_dir} created.")
         with open(args.loss_dir + filename + '.json', mode='w') as f:
             json.dump({'epoch': epoch_list, 'loss': loss_list, 'val_loss': val_loss_list}, f)
 
@@ -157,7 +165,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("command", help='trains/eval/eval_burst') # 指定模式 trains（训练）/eval（评估）/eval_burst（评估突发噪声场景）
     parser.add_argument("-ct", '--channel_type', help="awgn/slow_fading/slow_fading_eq/burst") # 指定信道
-    parser.add_argument("-md", '--model_dir', help="dir for model", default='model/') # 默认创建model/目录用于保存训练好的模型文件（可自定义）
+    parser.add_argument("-md", '--model_dir', help="dir for model", default='model/') # 需要手动创建model文件夹用于保存训练好的模型文件，这里只是给了默认的字符串，但不会自动创建
     parser.add_argument("-lmp", '--load_model_path', help="model path for loading") # 指定是否使用预训练模型，如使用需要指定预训练模型的路径
     parser.add_argument("-bs", "--batch_size", help="Batch size for training", default=128, type=int)
     parser.add_argument("-e", "--epochs", help="epochs for training", default=1280, type=int)
@@ -168,7 +176,7 @@ if __name__ == "__main__":
     parser.add_argument("-snr_up_train", "--snr_up_train", help="snr_up for training", default=20, type=int)
     parser.add_argument("-snr_low_eval", "--snr_low_eval", help="snr_low for evaluation", default=0, type=int)
     parser.add_argument("-snr_up_eval", "--snr_up_eval", help="snr_up for evaluation", default=20, type=int)
-    parser.add_argument("-ldd", "--loss_dir", help="loss_dir for training", default='loss/')
+    parser.add_argument("-ldd", "--loss_dir", help="loss_dir for training", default='loss/') # 需要手动创建loss文件夹用于保存loss，不会自动创建
     parser.add_argument("-ed", "--eval_dir", help="eval_dir", default='eval/')
     parser.add_argument("-b_snr_eval", "--burst_snr_eval", help="snr_eval for eval_burst", default=10, type=int)
     parser.add_argument("-b_stddev", "--burst_standard_derivation", help="burst_standard_derivation for eval_burst",
