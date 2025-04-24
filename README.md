@@ -26,7 +26,7 @@ python adjscc_cifar10.py -h
 python adjscc_cifar10.py trains -ct awgn  
 ```
 > 至少需要指定脚本运行模式 trains/eval/eval_burst 和信道类型 -ct awgn/slow_fading/slow_fading_eq/burst
-### 指定预训练模型路径（如果使用预训练模型）
+### 指定预训练模型路径（如果使用eval模式，则需要指定预训练模型）
 ```python
 python adjscc_cifar10.py eval -ct awgn --load_model_path <预训练模型路径> 
 ``` 
